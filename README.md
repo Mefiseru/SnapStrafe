@@ -1,6 +1,6 @@
 # SnapStrafe
 
-**SnapStrafe: Snap Tap Strafe technology for every keyboard**
+**SnapStrafe: Razer's Snap Tap Strafe technology for every keyboard**
 
 SnapStrafe is a powerful tool designed to enhance gaming and productivity by implementing snap tap strafe technology for every keyboard. The project provides a seamless experience by automatically tapping the opposite key when a specified key is released, allowing for quick and efficient movements.
 
@@ -8,6 +8,8 @@ SnapStrafe is a powerful tool designed to enhance gaming and productivity by imp
 
 - Supports both Windows and Linux operating systems.
 - Detects key releases and automatically taps the opposite key with a specified hold duration.
+- Toggle functionality on/off with the 'N' key without exiting the program.
+- Allows user control to override automatic taps with manual key presses. (BETA!)
 - Easy installation and setup with automated scripts.
 - Utilizes Python and C for optimal performance and responsiveness.
 
@@ -17,7 +19,7 @@ To set up SnapStrafe on your system, follow these steps:
 
 ### Prerequisites
 
-- Python 3.x installed on your system.
+- Python 3.x installed on your system. (tested on Python 3.10.10)
 - On Linux, ensure you have `sudo` privileges for installing system packages.
 
 ### Setup Instructions
@@ -25,7 +27,7 @@ To set up SnapStrafe on your system, follow these steps:
 1. **Clone the Repository** (or download the source code):
 
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/Mefiseru/SnapStrafe.git
    cd SnapStrafe/src
    ```
 
@@ -55,6 +57,7 @@ python main.py
 
 - **Key Detection**: The script listens for the release of the 'A' and 'D' keys.
 - **Automatic Opposite Tap**: When 'A' is released, 'D' is tapped, and vice versa, with a configurable hold duration.
+- **Stop toggle** Toggle functionality on/off with the 'N' key without exiting the program.
 - **Exit**: Use `Ctrl+C` in the terminal to exit the program.
 
 ## Configuration
@@ -82,7 +85,7 @@ Contributions are welcome! If you'd like to contribute to SnapStrafe, please for
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more information.
+This project is licensed under the GPL-3 License. See the [LICENSE](LICENSE) file for more information.
 
 ## Support
 

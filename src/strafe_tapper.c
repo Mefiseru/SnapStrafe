@@ -1,12 +1,10 @@
 #include <Python.h>
 
 #ifdef _WIN32
-#include <windows.h>  // Include the Windows API for key input
+#include <windows.h>
 
-// Windows-specific functions
-
-// Function to check if a key is released (returns 1 if released, 0 if pressed)
-static PyObject* check_key_release(PyObject* self, PyObject* args) {
+// Function to check if a key is currently pressed
+static PyObject* check_key_state(PyObject* self, PyObject* args) {
     char* key;
     if (!PyArg_ParseTuple(args, "s", &key))
         return NULL;
@@ -16,15 +14,17 @@ static PyObject* check_key_release(PyObject* self, PyObject* args) {
         keyState = GetAsyncKeyState(0x41); // Virtual key code for 'A'
     } else if (strcmp(key, "D") == 0) {
         keyState = GetAsyncKeyState(0x44); // Virtual key code for 'D'
+    } else if (strcmp(key, "N") == 0) {
+        keyState = GetAsyncKeyState(0x4E); // Virtual key code for 'N'
     } else {
         Py_RETURN_FALSE;
     }
 
-    // Check if the key is unpressed
-    if (keyState >= 0) {
-        Py_RETURN_TRUE;
-    } else {
+    // Return True if the key is currently pressed
+    if (keyState & 0x8000) {
         Py_RETURN_FALSE;
+    } else {
+        Py_RETURN_TRUE;
     }
 }
 
@@ -47,7 +47,7 @@ static PyObject* tap_key(PyObject* self, PyObject* args) {
 
     // Press the key
     SendInput(1, &input, sizeof(INPUT));
-    Sleep(70);  // Hold the key for 70 milliseconds (can adjust as needed)
+    Sleep(70);  // Hold the key for 50 milliseconds (can adjust as needed)
     // Release the key
     input.ki.dwFlags = KEYEVENTF_KEYUP;
     SendInput(1, &input, sizeof(INPUT));
@@ -61,13 +61,11 @@ static PyObject* tap_key(PyObject* self, PyObject* args) {
 #include <X11/extensions/XTest.h>
 #include <unistd.h>  // For usleep
 
-// Linux-specific functions
-
 static Display* display;
 static Window root;
 
-// Function to check if a key is released (returns 1 if released, 0 if pressed)
-static PyObject* check_key_release(PyObject* self, PyObject* args) {
+// Function to check if a key is currently pressed
+static PyObject* check_key_state(PyObject* self, PyObject* args) {
     char* key;
     if (!PyArg_ParseTuple(args, "s", &key))
         return NULL;
@@ -80,15 +78,17 @@ static PyObject* check_key_release(PyObject* self, PyObject* args) {
         keycode = XKeysymToKeycode(display, XK_A);
     } else if (strcmp(key, "D") == 0) {
         keycode = XKeysymToKeycode(display, XK_D);
+    } else if (strcmp(key, "N") == 0) {
+        keycode = XKeysymToKeycode(display, XK_N);
     } else {
         Py_RETURN_FALSE;
     }
 
-    // Check if the key is unpressed
-    if (!(keys_return[keycode / 8] & (1 << (keycode % 8)))) {
-        Py_RETURN_TRUE;
-    } else {
+    // Return True if the key is currently pressed
+    if (keys_return[keycode / 8] & (1 << (keycode % 8))) {
         Py_RETURN_FALSE;
+    } else {
+        Py_RETURN_TRUE;
     }
 }
 
@@ -109,7 +109,7 @@ static PyObject* tap_key(PyObject* self, PyObject* args) {
 
     KeyCode keycode = XKeysymToKeycode(display, keysym);
     XTestFakeKeyEvent(display, keycode, True, CurrentTime);
-    usleep(70000);  // Hold the key for 100 milliseconds (can adjust as needed)
+    usleep(70000);  // Hold the key for 70 milliseconds (can adjust as needed)
     XTestFakeKeyEvent(display, keycode, False, CurrentTime);
     XFlush(display);
 
@@ -119,7 +119,7 @@ static PyObject* tap_key(PyObject* self, PyObject* args) {
 #endif
 
 static PyMethodDef StrafeTapperMethods[] = {
-    {"check_key_release", check_key_release, METH_VARARGS, "Check if a key is released."},
+    {"check_key_state", check_key_state, METH_VARARGS, "Check if a key is currently pressed."},
     {"tap_key", tap_key, METH_VARARGS, "Tap a key quickly with a hold."},
     {NULL, NULL, 0, NULL}
 };
