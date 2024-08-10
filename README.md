@@ -82,7 +82,7 @@ Contributions are welcome! If you'd like to contribute to SnapStrafe, please for
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more information.
+This project is licensed under the GPL-3 License. See the [LICENSE](LICENSE) file for more information.
 
 ## Support
 
