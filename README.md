@@ -25,7 +25,7 @@ To set up SnapStrafe on your system, follow these steps:
 1. **Clone the Repository** (or download the source code):
 
    ```bash
-   git clone <[repository-url](https://github.com/Mefiseru/SnapStrafe.git)>
+   git clone https://github.com/Mefiseru/SnapStrafe.git
    cd SnapStrafe/src
    ```
 
