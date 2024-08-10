@@ -22,9 +22,9 @@ static PyObject* check_key_state(PyObject* self, PyObject* args) {
 
     // Return True if the key is currently pressed
     if (keyState & 0x8000) {
-        Py_RETURN_FALSE;
+        Py_RETURN_FALSE;  // Key is pressed
     } else {
-        Py_RETURN_TRUE;
+        Py_RETURN_TRUE;  // Key is released
     }
 }
 
@@ -47,7 +47,7 @@ static PyObject* tap_key(PyObject* self, PyObject* args) {
 
     // Press the key
     SendInput(1, &input, sizeof(INPUT));
-    Sleep(70);  // Hold the key for 50 milliseconds (can adjust as needed)
+    Sleep(50);  // Hold the key for 50 milliseconds (can adjust as needed)
     // Release the key
     input.ki.dwFlags = KEYEVENTF_KEYUP;
     SendInput(1, &input, sizeof(INPUT));
@@ -86,9 +86,9 @@ static PyObject* check_key_state(PyObject* self, PyObject* args) {
 
     // Return True if the key is currently pressed
     if (keys_return[keycode / 8] & (1 << (keycode % 8))) {
-        Py_RETURN_FALSE;
+        Py_RETURN_FALSE;  // Key is pressed
     } else {
-        Py_RETURN_TRUE;
+        Py_RETURN_TRUE;  // Key is released
     }
 }
 
@@ -109,7 +109,7 @@ static PyObject* tap_key(PyObject* self, PyObject* args) {
 
     KeyCode keycode = XKeysymToKeycode(display, keysym);
     XTestFakeKeyEvent(display, keycode, True, CurrentTime);
-    usleep(70000);  // Hold the key for 70 milliseconds (can adjust as needed)
+    usleep(50000);  // Hold the key for 50 milliseconds (can adjust as needed)
     XTestFakeKeyEvent(display, keycode, False, CurrentTime);
     XFlush(display);
 
