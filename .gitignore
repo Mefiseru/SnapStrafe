@@ -1,0 +1,6 @@
+# Cache files / Builds / DLL's
+*.pyd
+build/
+
+# Ignore VSCode settings
+.vscode/
