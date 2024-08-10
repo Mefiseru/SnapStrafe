@@ -1,6 +1,6 @@
 # SnapStrafe
 
-**SnapStrafe: Snap Tap Strafe technology for every keyboard**
+**SnapStrafe: Razer's Snap Tap Strafe technology for every keyboard**
 
 SnapStrafe is a powerful tool designed to enhance gaming and productivity by implementing snap tap strafe technology for every keyboard. The project provides a seamless experience by automatically tapping the opposite key when a specified key is released, allowing for quick and efficient movements.
 
